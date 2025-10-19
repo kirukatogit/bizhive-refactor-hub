@@ -6,7 +6,8 @@ import {
   Building2, 
   LogOut,
   ChevronLeft,
-  ChevronRight
+  ChevronRight,
+  FileText
 } from "lucide-react"
 
 import {
@@ -26,6 +27,7 @@ import { Button } from "@/components/ui/button"
 const navigationItems = [
   { title: "Dashboard", url: "/dashboard", icon: Home },
   { title: "Mi Perfil", url: "/profile", icon: User },
+  { title: "Logs de Auditoría", url: "/audit-logs", icon: FileText },
 ]
 
 const DashboardSidebar = () => {
@@ -38,7 +40,7 @@ const DashboardSidebar = () => {
 
   const handleSignOut = async () => {
     await signOut()
-    navigate('/auth')
+    navigate('/')
   }
 
   const isActive = (path: string) => currentPath === path

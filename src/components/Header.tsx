@@ -30,10 +30,10 @@ const Header = () => {
         
         <div className="flex items-center space-x-3">
           <Button variant="ghost" className="hidden md:block" asChild>
-            <Link to="/auth">Iniciar Sesión</Link>
+            <Link to="/dashboard">Iniciar Sesión</Link>
           </Button>
           <Button variant="hero" asChild>
-            <Link to="/auth">Registrarse</Link>
+            <Link to="/dashboard">Ir al Dashboard</Link>
           </Button>
           <Button variant="ghost" size="icon" className="md:hidden">
             <Menu className="h-5 w-5" />

@@ -4,12 +4,11 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "@/hooks/useAuth";
-import ProtectedRoute from "@/components/ProtectedRoute";
 import Index from "./pages/Index";
 import Dashboard from "./pages/Dashboard";
-import Auth from "./pages/Auth";
 import Profile from "./pages/Profile";
 import BranchDetail from "./pages/BranchDetail";
+import AuditLogs from "./pages/AuditLogs";
 import TestUsersSetup from "./pages/TestUsersSetup";
 import NotFound from "./pages/NotFound";
 
@@ -24,22 +23,10 @@ const App = () => (
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Index />} />
-            <Route path="/auth" element={<Auth />} />
-            <Route path="/dashboard" element={
-              <ProtectedRoute>
-                <Dashboard />
-              </ProtectedRoute>
-            } />
-            <Route path="/profile" element={
-              <ProtectedRoute>
-                <Profile />
-              </ProtectedRoute>
-            } />
-            <Route path="/branch/:branchId" element={
-              <ProtectedRoute>
-                <BranchDetail />
-              </ProtectedRoute>
-            } />
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/branch/:branchId" element={<BranchDetail />} />
+            <Route path="/audit-logs" element={<AuditLogs />} />
             <Route path="/test-setup" element={<TestUsersSetup />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
