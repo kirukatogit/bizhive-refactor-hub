@@ -2,39 +2,61 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
+/* BizHive Design System - Colmena de Negocios Theme
 All colors MUST be HSL.
 */
 
 @layer base {
   :root {
     --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    --foreground: 0 0% 0%;
 
     --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card-foreground: 0 0% 0%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover-foreground: 0 0% 0%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    /* BizHive Brand Colors - Bee/Honey Theme */
+    --primary: 45 93% 47%; /* Vibrant honey yellow */
+    --primary-foreground: 0 0% 0%;
+    
+    --primary-dark: 35 100% 35%; /* Darker amber */
+    --primary-light: 48 100% 67%; /* Light honey */
+    
+    --secondary: 0 0% 0%; /* Pure black */
+    --secondary-foreground: 0 0% 100%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    --muted: 48 100% 96%;
+    --muted-foreground: 0 0% 25%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --accent: 45 93% 47%;
+    --accent-foreground: 0 0% 0%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --border: 48 100% 90%;
+    --input: 48 100% 95%;
+    --ring: 45 93% 47%;
+    
+    /* Custom BizHive Design Tokens */
+    --honey: 42 100% 70%;
+    --amber: 35 100% 50%;
+    --beeswax: 48 100% 88%;
+    
+    /* Gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--primary-dark)));
+    --gradient-honey: linear-gradient(145deg, hsl(var(--honey)), hsl(var(--amber)));
+    --gradient-hive: linear-gradient(180deg, hsl(var(--beeswax)), hsl(var(--primary-light)));
+    
+    /* Shadows with bee theme */
+    --shadow-hive: 0 10px 30px -5px hsl(var(--primary) / 0.2);
+    --shadow-honey: 0 20px 40px -10px hsl(var(--amber) / 0.3);
+    
+    /* Animations */
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-bounce: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 
     --radius: 0.5rem;
 
