@@ -1,4 +1,4 @@
-import { NavLink, useLocation, useNavigate } from "react-router-dom"
+import { NavLink, useLocation } from "react-router-dom"
 import { useAuth } from "@/hooks/useAuth"
 import { 
   Home, 
@@ -32,7 +32,6 @@ const navigationItems = [
 
 const DashboardSidebar = () => {
   const { signOut } = useAuth()
-  const navigate = useNavigate()
   const { state, toggleSidebar } = useSidebar()
   const location = useLocation()
   const currentPath = location.pathname
@@ -40,7 +39,6 @@ const DashboardSidebar = () => {
 
   const handleSignOut = async () => {
     await signOut()
-    navigate('/')
   }
 
   const isActive = (path: string) => currentPath === path

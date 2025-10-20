@@ -50,6 +50,9 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
   const signOut = async () => {
     await supabase.auth.signOut()
+    setSession(null)
+    setUser(null)
+    window.location.href = '/'
   }
 
   const value = {
