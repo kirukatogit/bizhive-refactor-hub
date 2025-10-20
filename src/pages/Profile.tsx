@@ -52,7 +52,7 @@ const Profile = () => {
         .from('profiles')
         .select('*')
         .eq('id', user?.id)
-        .single()
+        .maybeSingle()
 
       if (error) throw error
 
@@ -65,6 +65,23 @@ const Profile = () => {
           // @ts-ignore - Supabase types need to be regenerated
           phone: data.phone || '',
         })
+      } else {
+        // Si no existe perfil, crear uno por defecto
+        const { error: insertError } = await supabase
+          .from('profiles')
+          .insert({
+            id: user?.id,
+            full_name: user?.email?.split('@')[0] || '',
+            company_name: 'Mi Empresa',
+          })
+
+        if (!insertError) {
+          setProfile({
+            full_name: user?.email?.split('@')[0] || '',
+            company_name: 'Mi Empresa',
+            phone: '',
+          })
+        }
       }
     } catch (error) {
       console.error('Error fetching profile:', error)
