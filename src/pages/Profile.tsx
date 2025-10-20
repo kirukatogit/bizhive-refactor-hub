@@ -34,6 +34,7 @@ const Profile = () => {
     phone: '',
   })
   const [passwordData, setPasswordData] = useState({
+    currentPassword: '',
     newPassword: '',
     confirmPassword: '',
   })
@@ -126,6 +127,15 @@ const Profile = () => {
   const handlePasswordChange = async (e: React.FormEvent) => {
     e.preventDefault()
     
+    if (!passwordData.currentPassword) {
+      toast({
+        title: 'Error',
+        description: 'Debes ingresar tu contraseña actual',
+        variant: 'destructive',
+      })
+      return
+    }
+    
     if (passwordData.newPassword !== passwordData.confirmPassword) {
       toast({
         title: 'Error',
@@ -146,6 +156,22 @@ const Profile = () => {
 
     setChangingPassword(true)
     try {
+      // Primero reautenticamos al usuario con su contraseña actual
+      const { error: signInError } = await supabase.auth.signInWithPassword({
+        email: user?.email || '',
+        password: passwordData.currentPassword,
+      })
+
+      if (signInError) {
+        toast({
+          title: 'Error',
+          description: 'La contraseña actual es incorrecta',
+          variant: 'destructive',
+        })
+        return
+      }
+
+      // Si la reautenticación es exitosa, actualizamos la contraseña
       const { error } = await supabase.auth.updateUser({
         password: passwordData.newPassword
       })
@@ -157,7 +183,7 @@ const Profile = () => {
         description: 'Tu contraseña ha sido cambiada exitosamente',
       })
       
-      setPasswordData({ newPassword: '', confirmPassword: '' })
+      setPasswordData({ currentPassword: '', newPassword: '', confirmPassword: '' })
     } catch (error: any) {
       console.error('Error changing password:', error)
       toast({
@@ -302,6 +328,24 @@ const Profile = () => {
                   </CardHeader>
                   <CardContent>
                     <form onSubmit={handlePasswordChange} className="space-y-6">
+                      <div className="space-y-2">
+                        <Label htmlFor="currentPassword">Contraseña Actual *</Label>
+                        <div className="relative">
+                          <Lock className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                          <Input
+                            id="currentPassword"
+                            type="password"
+                            value={passwordData.currentPassword}
+                            onChange={(e) =>
+                              setPasswordData({ ...passwordData, currentPassword: e.target.value })
+                            }
+                            className="pl-10"
+                            required
+                            placeholder="Ingresa tu contraseña actual"
+                          />
+                        </div>
+                      </div>
+
                       <div className="space-y-2">
                         <Label htmlFor="newPassword">Nueva Contraseña *</Label>
                         <div className="relative">

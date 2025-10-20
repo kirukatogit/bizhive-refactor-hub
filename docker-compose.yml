@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  bizhive-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:80"
+    environment:
+      - NODE_ENV=production
+    restart: unless-stopped
+    container_name: bizhive-refactor-hub
+    networks:
+      - bizhive-network
+
+networks:
+  bizhive-network:
+    driver: bridge
