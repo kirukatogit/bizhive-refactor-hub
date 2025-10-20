@@ -45,19 +45,18 @@ const BranchDetail = () => {
         .eq('user_id', user?.id)
 
       if (userRoles && userRoles.length > 0) {
-        const roles = userRoles.map(r => r.role)
-        if (roles.includes('admin')) {
-          setUserRole('admin')
-        } else if (roles.includes('gerente')) {
-          setUserRole('gerente')
-        } else if (roles.includes('empleado')) {
-          setUserRole('empleado')
-        } else if (roles.includes('pasante')) {
-          setUserRole('pasante')
-        }
+        // Ahora solo debe haber un rol por usuario
+        const role = userRoles[0].role
+        setUserRole(role)
+        console.log('User role:', role)
+      } else {
+        // Si no tiene rol, asignar empleado por defecto
+        setUserRole('empleado')
+        console.log('No role found, defaulting to empleado')
       }
     } catch (error) {
       console.error('Error fetching user role:', error)
+      setUserRole('empleado')
     }
   }
 

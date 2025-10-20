@@ -134,7 +134,8 @@ const EmployeesList = ({
           options: {
             data: {
               full_name: formData.name
-            }
+            },
+            emailRedirectTo: `${window.location.origin}/dashboard`
           }
         });
         if (authError) {
@@ -146,12 +147,13 @@ const EmployeesList = ({
         if (userId) {
           let roleToAssign: 'gerente' | 'empleado' | 'pasante' = 'empleado';
           
-          if (formData.position === 'gerente') {
+          if (formData.position.toLowerCase().includes('gerente')) {
             roleToAssign = 'gerente';
-          } else if (formData.position === 'pasante') {
+          } else if (formData.position.toLowerCase().includes('pasante')) {
             roleToAssign = 'pasante';
           }
 
+          // Insertar rol (el constraint asegura que solo haya uno por usuario)
           await supabase.from('user_roles').insert({
             user_id: userId,
             role: roleToAssign

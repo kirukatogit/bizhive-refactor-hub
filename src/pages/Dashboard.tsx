@@ -70,7 +70,7 @@ const Dashboard = () => {
 
   const checkUserRole = async () => {
     try {
-      // Obtener roles del usuario desde user_roles
+      // Obtener rol del usuario desde user_roles
       // @ts-ignore
       const { data: userRoles } = await supabase
         .from('user_roles')
@@ -82,10 +82,10 @@ const Dashboard = () => {
         return
       }
 
-      const roles = userRoles.map(r => r.role)
+      const role = userRoles[0].role
 
       // Si es gerente, empleado o pasante, redirigir a su sucursal
-      if (roles.includes('gerente') || roles.includes('empleado') || roles.includes('pasante')) {
+      if (role === 'gerente' || role === 'empleado' || role === 'pasante') {
         // @ts-ignore
         const { data: employee } = await supabase
           .from('employees')
