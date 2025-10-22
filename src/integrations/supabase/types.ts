@@ -21,6 +21,7 @@ export type Database = {
           id: string
           new_data: Json | null
           old_data: Json | null
+          owner_id: string | null
           record_id: string | null
           table_name: string
           user_email: string | null
@@ -32,6 +33,7 @@ export type Database = {
           id?: string
           new_data?: Json | null
           old_data?: Json | null
+          owner_id?: string | null
           record_id?: string | null
           table_name: string
           user_email?: string | null
@@ -43,6 +45,7 @@ export type Database = {
           id?: string
           new_data?: Json | null
           old_data?: Json | null
+          owner_id?: string | null
           record_id?: string | null
           table_name?: string
           user_email?: string | null
