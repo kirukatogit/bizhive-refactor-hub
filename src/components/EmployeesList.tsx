@@ -154,10 +154,17 @@ const EmployeesList = ({
           }
 
           // Insertar rol (el constraint asegura que solo haya uno por usuario)
-          await supabase.from('user_roles').insert({
+          const { error: roleError } = await supabase.from('user_roles').insert({
             user_id: userId,
             role: roleToAssign
           });
+
+          if (roleError) {
+            console.error('Error asignando rol:', roleError);
+            throw new Error(`No se pudo asignar el rol ${roleToAssign}: ${roleError.message}`);
+          }
+
+          console.log(`Rol ${roleToAssign} asignado correctamente al usuario ${userId}`);
         }
       }
 
