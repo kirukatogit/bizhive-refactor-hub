@@ -70,36 +70,41 @@ const Dashboard = () => {
 
   const checkUserRole = async () => {
     try {
-      // Obtener rol del usuario desde user_roles
+      // Primero verificar si el usuario es empleado (independientemente del rol)
+      // @ts-ignore
+      const { data: employee } = await supabase
+        .from('employees')
+        .select('branch_id')
+        .eq('user_id', user?.id)
+        .maybeSingle()
+
+      // Si es empleado, redirigir a su sucursal
+      if (employee?.branch_id) {
+        console.log('Usuario es empleado, redirigiendo a sucursal:', employee.branch_id)
+        navigate(`/branch/${employee.branch_id}`)
+        return
+      }
+
+      // Si no es empleado, verificar si tiene rol de admin
       // @ts-ignore
       const { data: userRoles } = await supabase
         .from('user_roles')
         .select('role')
         .eq('user_id', user?.id)
 
-      if (!userRoles || userRoles.length === 0) {
-        fetchDashboardData()
-        return
-      }
-
-      const role = userRoles[0].role
-
-      // Si es gerente, empleado o pasante, redirigir a su sucursal
-      if (role === 'gerente' || role === 'empleado' || role === 'pasante') {
-        // @ts-ignore
-        const { data: employee } = await supabase
-          .from('employees')
-          .select('branch_id')
-          .eq('user_id', user?.id)
-          .single()
-
-        if (employee?.branch_id) {
-          navigate(`/branch/${employee.branch_id}`)
+      if (userRoles && userRoles.length > 0) {
+        const role = userRoles[0].role
+        console.log('Usuario tiene rol:', role)
+        
+        if (role === 'admin') {
+          // Si es admin, cargar dashboard normal
+          fetchDashboardData()
           return
         }
       }
 
-      // Si es admin, cargar dashboard normal
+      // Si llegamos aquí, mostrar el dashboard por defecto
+      console.log('Usuario sin rol específico, mostrando dashboard')
       fetchDashboardData()
     } catch (error) {
       console.error('Error checking user role:', error)
